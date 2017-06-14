@@ -107,7 +107,8 @@ namespace StoryboardTable
 		class CollectionViewSource : UICollectionViewSource
 		{
 			private string[] data = { "Group_Image_AllElse", "Group_Image_StudentOrg", "Group_Image_AllElse", "Group_Image_AllElse", "Group_Image_StudentOrg" };
-			private int row = 0;
+			//private string[] data = { "Group_Image_AllElse", "Group_Image_StudentOrg" };
+            private int row = 0;
 
 			public int Row
 			{
@@ -177,7 +178,7 @@ namespace StoryboardTable
 			ImageCell(RectangleF frame) : base(frame)
 			{
 				imageView = new UIImageView();
-                imageView.LayoutMargins = new UIEdgeInsets(20.0f, 20.0f, 20.0f, 20.0f);
+                //imageView.LayoutMargins = new UIEdgeInsets(20.0f, 20.0f, 20.0f, 20.0f);
 				ContentView.AddSubview(imageView);
 			}
 		}
