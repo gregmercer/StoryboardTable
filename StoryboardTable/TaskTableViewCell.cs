@@ -9,7 +9,7 @@ namespace StoryboardTable
     public partial class TaskTableViewCell : UITableViewCell
     {
 		CollectionViewSource source;
-		UICollectionViewFlowLayout layout;
+        CollectionViewFlowDelegate flowDelegate;
 
         public TaskTableViewCell (IntPtr handle) : base (handle)
         {
@@ -28,11 +28,25 @@ namespace StoryboardTable
 			source = new CollectionViewSource();
 			TagsCollectionView.Source = source;
 
-			TagsCollectionView.Delegate = new CollectionViewFlowDelegate(source);
+			flowDelegate = new CollectionViewFlowDelegate(source);
+            TagsCollectionView.Delegate = flowDelegate;
+
+            //TagsCollectionView.LayoutMargins = new UIEdgeInsets(20.0f, 20.0f, 20.0f, 20.0f);
 
 			// Register the TextCell class for the Cells in the Collection View
 
 			TagsCollectionView.RegisterClassForCell(typeof(ImageCell), ImageCell.CellId);
+
+            TagsCollectionView.Frame = new RectangleF(16, 40, 260, 120);
+
+			ContentView.AddConstraint(
+			  NSLayoutConstraint.Create(
+                TagsCollectionView, NSLayoutAttribute.Leading,
+				NSLayoutRelation.Equal,
+                ContentView, NSLayoutAttribute.LeadingMargin,
+				1, 10
+			  )
+			);
 
 			ContentView.AddConstraint(
 			  NSLayoutConstraint.Create(
@@ -48,7 +62,7 @@ namespace StoryboardTable
 				TitleLabel, NSLayoutAttribute.Bottom,
 				NSLayoutRelation.Equal,
 				TagsCollectionView, NSLayoutAttribute.Top,
-				1, 3
+				1, 0
 			  )
 			);
 
@@ -71,6 +85,8 @@ namespace StoryboardTable
 
 			public CollectionViewFlowDelegate(CollectionViewSource inSource)
 			{
+                //minimumLineSpacing
+
 				source = inSource;
 				data = source.Data;
 			}
@@ -90,7 +106,7 @@ namespace StoryboardTable
 
 		class CollectionViewSource : UICollectionViewSource
 		{
-			private string[] data = { "Group_Image_AllElse", "Group_Image_StudentOrg", "Group_Image_AllElse" };
+			private string[] data = { "Group_Image_AllElse", "Group_Image_StudentOrg", "Group_Image_AllElse", "Group_Image_AllElse", "Group_Image_StudentOrg" };
 			private int row = 0;
 
 			public int Row
@@ -161,6 +177,7 @@ namespace StoryboardTable
 			ImageCell(RectangleF frame) : base(frame)
 			{
 				imageView = new UIImageView();
+                imageView.LayoutMargins = new UIEdgeInsets(20.0f, 20.0f, 20.0f, 20.0f);
 				ContentView.AddSubview(imageView);
 			}
 		}
